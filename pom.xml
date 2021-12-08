@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>Stress-Test</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo</name>
+    <description>Demo project for Spring Boot</description>
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+    <repositories>
+        <repository>
+            <id>rdb-repo</id>
+            <name>RevDeBug Maven Repo</name>
+            <url>https://release.revdebug.com/repository/maven</url>
+        </repository>
+        <repository>
+            <id>rdb-repo-test</id>
+            <name>RevDeBug Maven Repo</name>
+            <url>https://release.revdebug.com/repository/maven-test</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>com.revdebug</groupId>
+            <artifactId>compiler</artifactId>
+            <version>6.1.16-SNAPSHOT-1635951658</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.revdebug</groupId>
+            <artifactId>RevDeBug</artifactId>
+            <version>6.1.16-SNAPSHOT-1635951658</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--https://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/maven-plugin/examples/exclude-dependency.html-->
+                    <excludes>
+                        <exclude>
+                            <groupId>com.revdebug</groupId>
+                            <artifactId>compiler</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Spring Boot Actuator displays build-related information
+                          if a META-INF/build-info.properties file is present -->
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <additionalProperties>
+                                <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                <java.source>${maven.compiler.source}</java.source>
+                                <java.target>${maven.compiler.target}</java.target>
+                            </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <compilerArgs>
+
+                        <arg>-ArecordServerAddress=20.199.127.147</arg>
+                        <arg>-ArecordServerPort=42734</arg>
+                        <arg>-ArecordingMode=OnEvent</arg>
+                        <arg>-AapplicationName=Java-Stress-Test</arg>
+                        <arg>-AsolutionName=Java-Stress-Test</arg>
+                        <arg>-AreleaseId=Go-java</arg>
+                        <arg>-AreleaseDisplayName=Java-Stress-Test</arg>
+                        <arg>-ArepositoryPath=Metadata</arg>
+                        <arg>-AuploadMetadata=true</arg>
+                        <arg>-AforceTLS=false</arg>
+                        <arg>-AbacklogSize=1000</arg>
+                        <arg>-AREVDEBUG_OFF=false</arg>
+                        <!--                        <arg>-AREVDEBUG_VERBOSE=debug</arg>-->
+                    </compilerArgs>
+                    <source>9</source>
+                    <target>9</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
