@@ -32,13 +32,13 @@
         <dependency>
             <groupId>com.revdebug</groupId>
             <artifactId>compiler</artifactId>
-            <version>6.1.16-SNAPSHOT-1635951658</version>
+            <version>${env.REVDEBUG_COMPILER_VERSION}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.revdebug</groupId>
             <artifactId>RevDeBug</artifactId>
-            <version>6.1.16-SNAPSHOT-1635951658</version>
+            <version>${env.REVDEBUG_COMPILER_VERSION}</version>
         </dependency>
 
         <dependency>
@@ -94,7 +94,7 @@
                 <configuration>
                     <compilerArgs>
 
-                        <arg>-ArecordServerAddress=20.199.127.147</arg>
+                        <arg>-ArecordServerAddress=${env.REVDEBUG_HOST}</arg>
                         <arg>-ArecordServerPort=42734</arg>
                         <arg>-ArecordingMode=OnEvent</arg>
                         <arg>-AapplicationName=Java-Stress-Test</arg>
@@ -103,9 +103,9 @@
                         <arg>-AreleaseDisplayName=Java-Stress-Test</arg>
                         <arg>-ArepositoryPath=Metadata</arg>
                         <arg>-AuploadMetadata=true</arg>
-                        <arg>-AforceTLS=false</arg>
+                        <arg>-AforceTLS=${env.REVDEBUG_FORCE_TLS}</arg>
                         <arg>-AbacklogSize=1000</arg>
-                        <arg>-AREVDEBUG_OFF=false</arg>
+                        <arg>-AREVDEBUG_OFF=${env.REVDEBUG_OFF}</arg>
                         <!--                        <arg>-AREVDEBUG_VERBOSE=debug</arg>-->
                     </compilerArgs>
                     <source>9</source>

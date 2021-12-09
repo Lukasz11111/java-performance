@@ -32,4 +32,38 @@ public class Controller {
         );
         auxiliary.attack(monsterStrength);
     }
+
+
+    
+    public void monstrum_(
+            int monsterStrength,
+            String name,
+            Optional<Integer> eyes,
+            Optional<Integer> noses,
+            Optional<Integer> paws,
+            Optional<Boolean> isFlying
+    ) {
+        Auxiliary auxiliary = new Auxiliary();
+        Monster newMonster = auxiliary.monsterGeneration(name, eyes
+                , noses
+                , paws
+                , isFlying
+        );
+        auxiliary.attack(monsterStrength);
+    }
+
+
+    @GetMapping("/")
+    @ResponseBody
+    public void getSuc() {
+        monstrum_(0,"www",Optional.ofNullable(2),Optional.ofNullable(2),Optional.ofNullable(2),Optional.ofNullable(true));
+    }
+
+    @GetMapping("/err")
+    @ResponseBody
+    public void getErr() {
+        monstrum_(100000,"www",Optional.ofNullable(22),Optional.ofNullable(23),Optional.ofNullable(22),Optional.ofNullable(false));
+    }
+
+
 }
