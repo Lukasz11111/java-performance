@@ -34,16 +34,21 @@ RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:11-jre-slim
 
-ARG SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG=localhost:11800 \
-     SW_AGENT_ACTIVE_ARG=1
+ARG SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG=localhost \
+     SW_AGENT_ACTIVE_ARG=1 \
+      SW_AGENT_FORCE_TLS_ARG=false
 
-ENV SW_AGENT_COLLECTOR_BACKEND_SERVICES=$SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG \
+ENV SW_AGENT_FORCE_TLS=$SW_AGENT_FORCE_TLS_ARG
+
+ENV SW_AGENT_COLLECTOR_BACKEND_SERVICES=${SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG}:11800 \
   SW_AGENT_ACTIVE=$SW_AGENT_ACTIVE_ARG
+
+RUN echo $SW_AGENT_COLLECTOR_BACKEND_SERVICES
 
 COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
 COPY --from=build /home/app/agent /usr/local/lib/agent
 
 # RUN echo agent.force_tls=$SW_AGENT_FORCE_TLS_ARG >> /usr/local/lib/agent/config/agent.config
-
+RUN echo agent.force_tls=$SW_AGENT_FORCE_TLS_ARG >> /usr/local/lib/agent/config/agent.config
 CMD  if [ "$SW_AGENT_ACTIVE" = "1" ] ; then echo  apm ; java -javaagent:/usr/local/lib/agent/skywalking-agent.jar -jar /usr/local/lib/demo.jar ; else echo no apm $SW_AGENT_ACTIVE  ; java -jar /usr/local/lib/demo.jar ; fi
 # CMD java -javaagent:/usr/local/lib/agent/skywalking-agent.jar -jar /usr/local/lib/demo.jar
