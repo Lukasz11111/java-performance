@@ -4,10 +4,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import stresstest.demo.Auxiliary;
 import stresstest.demo.Model.Monster;
 
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Optional;
+import java.util.Properties;
 
 @RestController
 public class Controller {
@@ -17,10 +23,10 @@ public class Controller {
     public void monstrum(
             @RequestParam(required = true) String name,
             @RequestParam(required = true) Integer monsterStrength,
-                        @RequestParam(required = false) Integer eyes,
-                         @RequestParam(required = false) Integer noses,
-                         @RequestParam(required = false) Integer paws,
-                         @RequestParam(required = false) Boolean isFlying
+            @RequestParam(required = false) Integer eyes,
+            @RequestParam(required = false) Integer noses,
+            @RequestParam(required = false) Integer paws,
+            @RequestParam(required = false) Boolean isFlying
 
     ) {
 
@@ -54,28 +60,63 @@ public class Controller {
     @GetMapping("/")
     @ResponseBody
     public void getSuc() {
-        monstrum_(0,"www",Optional.ofNullable(2),Optional.ofNullable(2),Optional.ofNullable(2),Optional.ofNullable(true));
+        monstrum_(0, "www", Optional.ofNullable(2), Optional.ofNullable(2), Optional.ofNullable(2), Optional.ofNullable(true));
     }
 
     @GetMapping("/err")
     @ResponseBody
     public void getErr() {
-        monstrum_(100000,"www",Optional.ofNullable(22),Optional.ofNullable(23),Optional.ofNullable(22),Optional.ofNullable(false));
+        monstrum_(100000, "www", Optional.ofNullable(22), Optional.ofNullable(23), Optional.ofNullable(22), Optional.ofNullable(false));
     }
 
     @GetMapping("/err-short")
     @ResponseBody
     public void getErrShort() {
-        int a=0;
-        a=a/a;
+        int a = 0;
+        a = a / a;
     }
+
     @GetMapping("/err-loop")
     @ResponseBody
     public void getErrLoop() {
-        int a=0;
-        for (int i=0;i<1000; i++){
-        a=0;
+        int a = 0;
+        for (int i = 0; i < 1000; i++) {
+            a = 0;
         }
-        a=a/a;
+        a = a / a;
+        RevDeBug.Storage.getStorageApi().StoreSnapshot("");
     }
+
+    @GetMapping("/multi-err")
+    @ResponseBody
+    public String multiErr() throws IOException {
+
+     String host =System.getenv("HOST_MULTI");
+        String url = "http://"+host+"/err";
+
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getForEntity(url, String.class).getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
+    @GetMapping("/multi")
+    @ResponseBody
+    public String multi() throws IOException {
+
+        String host =System.getenv("HOST_MULTI");
+        String url = "http://"+host+"/";
+
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getForEntity(url, String.class).getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
 }
