@@ -11,10 +11,10 @@ services:
         REVDEBUG_OFF_ARG: ${REVDEBUG_OFF:-false}
         SW_AGENT_VERSION: ${SW_AGENT_VERSION:-6.1.16}
         SW_AGENT_ACTIVE_ARG: ${SW_AGENT_ACTIVE:-1}
-        SW_AGENT_FORCE_TLS_ARG: ${SW_AGENT_FORCE_TLS:-false}
-        SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG: ${SW_AGENT_COLLECTOR_BACKEND_SERVICES:-20.199.127.147:11800}
+        SW_AGENT_FORCE_TLS_ARG: ${REVDEBUG_FORCE_TLS:-false}
+        SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG: ${REVDEBUG_HOST:-20.199.127.147}
     ports:
-      - '8000:8080'
+      - '8080:8080'
   java-stress-rdb:
     image: 'stressjava-rdb-new:latest'
     build:
@@ -26,10 +26,10 @@ services:
         REVDEBUG_OFF_ARG: ${REVDEBUG_OFF:-false}
         SW_AGENT_VERSION: ${SW_AGENT_VERSION:-6.1.16}
         SW_AGENT_ACTIVE_ARG: ${SW_AGENT_ACTIVE:-0}
-        SW_AGENT_FORCE_TLS_ARG: ${SW_AGENT_FORCE_TLS:-false}
-        SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG: ${SW_AGENT_COLLECTOR_BACKEND_SERVICES:-20.199.127.147:11800}
+        SW_AGENT_FORCE_TLS_ARG: ${REVDEBUG_FORCE_TLS:-false}
+        SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG: ${REVDEBUG_HOST:-20.199.127.147:11800}
     ports:
-      - '8001:8080'
+      - '8081:8080'
   java-stress-apm:
     image: 'stressjava-apm-new:latest'
     build:
@@ -41,14 +41,14 @@ services:
         REVDEBUG_OFF_ARG: ${REVDEBUG_OFF:-true}
         SW_AGENT_VERSION: ${SW_AGENT_VERSION:-6.1.16}
         SW_AGENT_ACTIVE_ARG: ${SW_AGENT_ACTIVE:-1}
-        SW_AGENT_FORCE_TLS_ARG: ${SW_AGENT_FORCE_TLS:-false}
-        SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG: ${SW_AGENT_COLLECTOR_BACKEND_SERVICES:-20.199.127.147:11800}
+        SW_AGENT_FORCE_TLS_ARG: ${REVDEBUG_FORCE_TLS:-false}
+        SW_AGENT_COLLECTOR_BACKEND_SERVICES_ARG: ${REVDEBUG_HOST:-20.199.127.147:11800}
     ports:
-      - '8002:8080'
+      - '8082:8080'
   java-stress-none:
     image: 'stressjava-none-new:latest'
     build:
       context: ./
       dockerfile: dockerfile.none
     ports:
-      - '8003:8080'
+      - '8083:8080'

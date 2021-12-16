@@ -69,12 +69,6 @@ public class Controller {
         monstrum_(100000, "www", Optional.ofNullable(22), Optional.ofNullable(23), Optional.ofNullable(22), Optional.ofNullable(false));
     }
 
-    @GetMapping("/err-short")
-    @ResponseBody
-    public void getErrShort() {
-        int a = 0;
-        a = a / a;
-    }
 
     @GetMapping("/err-loop")
     @ResponseBody
@@ -117,6 +111,28 @@ public class Controller {
             e.printStackTrace();
         }
         return url;
+    }
+
+    @GetMapping("/err-short")
+    @ResponseBody
+    public void getErrShort() {
+        int a=0;
+        a=a/a;
+    }
+    @GetMapping("/short")
+    @ResponseBody
+    public void getShort() {
+
+
+    }
+    
+    @GetMapping("/loop")
+    @ResponseBody
+    public void getLoop() {
+        int a=0;
+        for (int i=0;i<1000; i++){
+        a=0;
+        }
     }
 
 }
