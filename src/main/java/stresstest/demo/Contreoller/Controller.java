@@ -78,7 +78,6 @@ public class Controller {
             a = 0;
         }
         a = a / a;
-        RevDeBug.Storage.getStorageApi().StoreSnapshot("");
     }
 
     @GetMapping("/multi-err")
