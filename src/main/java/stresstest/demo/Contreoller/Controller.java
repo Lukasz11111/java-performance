@@ -1,9 +1,8 @@
 package stresstest.demo.Contreoller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import stresstest.demo.Auxiliary;
 import stresstest.demo.Model.Monster;
@@ -55,7 +54,12 @@ public class Controller {
         );
         auxiliary.attack(monsterStrength);
     }
-
+    @GetMapping("/greeting")
+    public ResponseEntity<String> greeting(@RequestHeader("accept-language") String language) {
+        // code that uses the language variable
+        String greeting="aa";
+        return new ResponseEntity<String>(greeting, HttpStatus.OK);
+    }
 
     @GetMapping("/")
     @ResponseBody
