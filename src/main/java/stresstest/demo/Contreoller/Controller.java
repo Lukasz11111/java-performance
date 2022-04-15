@@ -11,8 +11,11 @@ import stresstest.demo.Model.Monster;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.stream.Stream;
 
 @RestController
 public class Controller {
@@ -128,7 +131,37 @@ public class Controller {
 
 
     }
-    
+
+    public String givenJava_whenUsingSystemProp_thenGetVersion() {
+        String[] versionElements = System.getProperty("java.version").split("\\.");
+        int discard = Integer.parseInt(versionElements[0]);
+        int version;
+        if (discard == 1) {
+            version = Integer.parseInt(versionElements[1]);
+        } else {
+            version = discard;
+        }
+        return String.valueOf(version) ;
+    }
+
+    @GetMapping("versions")
+    public String java(){
+        List<String> list =new ArrayList<String>();
+        String rdbV="";
+        Stream.of(RevDeBug.Storage.class)
+                .map(VersionExtractor::extractVersion)
+                .forEach(list::add);
+
+        for (String i:list) {
+            rdbV+=i;
+        }
+        return "Java version: "+ givenJava_whenUsingSystemProp_thenGetVersion()+ "<br/> RevDeBug version:"+ rdbV;
+    }
+
+
+
+
+
     @GetMapping("/loop")
     @ResponseBody
     public void getLoop() {
