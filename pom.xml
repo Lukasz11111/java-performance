@@ -14,9 +14,14 @@
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <repositories>
+        <repository>
+            <id>reposilite-repository-releases</id>
+            <name>Reposilite Repository</name>
+            <url>http://192.168.1.130:8081/releases</url>
+        </repository>
         <repository>
             <id>rdb-repo</id>
             <name>RevDeBug Maven Repo</name>
@@ -32,20 +37,54 @@
         <dependency>
             <groupId>com.revdebug</groupId>
             <artifactId>compiler</artifactId>
-            <version>${env.REVDEBUG_COMPILER_VERSION}</version>
+            <version>6.6.6-SNAPSHOT-1668779702</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.revdebug</groupId>
             <artifactId>RevDeBug</artifactId>
-            <version>${env.REVDEBUG_COMPILER_VERSION}</version>
+            <version>6.6.6-SNAPSHOT-1668779702</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>1.6.20</version>
 
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.revdebug</groupId>-->
+<!--            <artifactId>compiler</artifactId>-->
+<!--            <version>7.0.15-SNAPSHOT</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.revdebug</groupId>-->
+<!--            <artifactId>RevDeBug</artifactId>-->
+<!--            <version>7.0.15-SNAPSHOT</version>-->
+<!--        </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>com.revdebug</groupId>-->
+<!--                    <artifactId>compiler</artifactId>-->
+<!--                    <version>6.5.3</version>-->
+<!--                </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>com.revdebug</groupId>-->
+<!--                    <artifactId>RevDeBug</artifactId>-->
+<!--                    <version>6.5.3</version>-->
+<!--                </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.7</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -55,6 +94,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -91,22 +131,26 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <configuration>
-                    <compilerArgs>
 
-                        <arg>-ArecordServerAddress=${env.REVDEBUG_HOST}</arg>
+                <configuration>
+
+                    <compilerArgs>
+                        <arg>-Xplugin:RevDeBugCompiler</arg>
+                        <arg>-ArecordServerAddress=34.142.48.5</arg>
                         <arg>-ArecordServerPort=42734</arg>
                         <arg>-ArecordingMode=OnEvent</arg>
-                        <arg>-AapplicationName=Java-Stress-Test</arg>
-                        <arg>-AsolutionName=Java-Stress-Test</arg>
-                        <arg>-AreleaseId=Go-java</arg>
-                        <arg>-AreleaseDisplayName=Java-Stress-Test</arg>
-                        <arg>-ArepositoryPath=Metadata</arg>
-                        <arg>-AuploadMetadata=true</arg>
-                        <arg>-AforceTLS=${env.REVDEBUG_FORCE_TLS}</arg>
-                        <arg>-AbacklogSize=1000</arg>
-                        <arg>-AREVDEBUG_OFF=${env.REVDEBUG_OFF}</arg>
-                        <!--                        <arg>-AREVDEBUG_VERBOSE=debug</arg>-->
+                        <arg>-AapplicationName=MySweetJavaApp</arg>
+                        <arg>-AsolutionName=MySweetJavaApp</arg>
+<!--                        <arg>-AreleaseId=MySweetJavaApp</arg>-->
+                        <arg>-AreleaseDisplayName=MySweetJavaApp</arg>
+<!--                        <arg>-ArepositoryPath=./Metadata423</arg>-->
+<!--                        <arg>-ArepositoryPath=Metadata</arg>-->
+<!--&lt;!&ndash;                        <arg>-AuploadMetadata=true</arg>&ndash;&gt;-->
+<!--                        <arg>-AforceTLS=false</arg>-->
+<!--                        <arg>-AbacklogSize=1000</arg>-->
+<!--                        <arg>-AREVDEBUG_OFF=${env.REVDEBUG_OFF}</arg>-->
+<!--                                                <arg>-AREVDEBUG_VERBOSE=Towel</arg>-->
+<!--                                                <arg>-AREVDEBUG_LOG_LEVEL=Towel</arg>-->
                     </compilerArgs>
                     <source>9</source>
                     <target>9</target>
